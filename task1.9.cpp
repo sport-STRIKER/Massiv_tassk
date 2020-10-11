@@ -1,48 +1,79 @@
 #include "T2.h"
 
-void count();
+void test()
+
+void count(int *n_space, int *n_line, char file_name[]);
+
+void print_buffer(char buffer[]);
 
 int main()
-{
-  count();
+{  
+  char file_name = "1.9.in";  
+  
+  int n_space = 0;
+  int n_line = 0; 
+  
+  count(&n_space, &n_line, file_name);
 
   return 0;
 }
 
-void count()
-{  
-  FILE *simble = 0;
+void count(int *n_space, int *n_line, char file_name[])
+{
+  FILE *f = fopen(file_name, "r");
   
   char buffer[40] = {};
-  
-  simble = fopen("1.9.in", "r");
 
-  fgets(buffer, 35, simble);
-
-  fclose(simble);
-  
-  int n_line = 0;
-  int n_space = 0;
-  
-  for(int i = 0; buffer[i] != '\0'; i++)
+  while (fgets(buffer, 35, f) != NULL)
   {
-    printf("-");
-    
-    if(buffer[i] == ' ')
-    {  
-      printf("+");
-      
-      n_space++;
-    }
+     for(int i = 0; buffer[i] != '\0'; i++)
+     {
+        if(buffer[i] == ' ')
+          *n_space++;
+        
 
-    if(buffer[i] == '\n')
-    {  
-      printf("!");  
-      
-      n_line++;
-    }
-  }  
+        if(buffer[i] == '\n')
+          *n_line++;
+
+     }
+  }
+
+  fclose(f);
+
+  //print_buffer(buffer);
+
+  printf("\nThe count of spaces = %d\n\n", n.space);
+  printf("The count of new strings = %d\n\n", n.line);
+}
+
+void test()
+{
+  char file_name = "1.9.test";  
   
-  printf("\nThe count of spaces = %d\n\n", n_line);  
-  printf("The count of new strings = %d\n\n", n_space);
+  int n_space = 0;
+  int n_line = 0; 
+  
+  count(&n_space, &n_line, file_name);
+
+  if (n_space == 1)
+    printf ("test is OK\n");
+  else
+    printf ("test is not OK\n");
+
+  if (n_line == 0)
+    printf ("test is OK\n");
+  else
+    printf ("test is not OK\n");
+}
+
+void print_buffer(char buffer[])
+{
+  int i = 0;
+
+  while (buffer[i] != '\0')
+  {
+    printf ("'%c'(%d)", buffer[i], buffer[i]);
+
+    i++;
+  }
 }
